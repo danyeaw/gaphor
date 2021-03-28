@@ -40,6 +40,11 @@ class AppFileManager(Service, ActionProvider):
         pass
 
     def load(self, filename):
+        for session in self.application.sessions:
+            if session.filename == filename:
+                session.foreground()
+                return
+
         reuse_session = self.session_is_new(self.application.active_session)
         if reuse_session:
             session = self.application.active_session
